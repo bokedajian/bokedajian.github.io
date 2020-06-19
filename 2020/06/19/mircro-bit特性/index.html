@@ -5,13 +5,17 @@
   
 
   
-  <title>Archives: 2020/5 | Hexo</title>
+  <title>mircro:bit服务和特性 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/archives/2020/05/index.html">
+  <meta name="description" content="micro:bit服务和特性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mircro:bit服务和特性">
+<meta property="og:url" content="http://yoursite.com/2020/06/19/mircro-bit%E7%89%B9%E6%80%A7/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="micro:bit服务和特性">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-06-19T09:08:16.000Z">
+<meta property="article:modified_time" content="2020-06-19T09:20:11.717Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -62,59 +66,68 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/05/30/hello-world/" class="archive-article-date">
-  <time datetime="2020-05-30T11:12:04.006Z" itemprop="datePublished">May 30</time>
+        <section id="main"><article id="post-mircro-bit特性" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/06/19/mircro-bit%E7%89%B9%E6%80%A7/" class="article-date">
+  <time datetime="2020-06-19T09:08:16.000Z" itemprop="datePublished">2020-06-19</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/30/hello-world/">Hello World</a>
+    <h1 class="article-title" itemprop="name">
+      mircro:bit服务和特性
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2020/05/21/hexo/" class="archive-article-date">
-  <time datetime="2020-05-21T07:17:14.000Z" itemprop="datePublished">May 21</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/05/21/hexo/">hexo搭建系列(二)</a>
-    </h1>
-  
+        <h2 id="micro-bit服务和特性"><a href="#micro-bit服务和特性" class="headerlink" title="micro:bit服务和特性"></a>micro:bit服务和特性</h2><a id="more"></a>
 
-    </header>
+<h3 id="开发板的服务和特性简介"><a href="#开发板的服务和特性简介" class="headerlink" title="开发板的服务和特性简介"></a>开发板的服务和特性简介</h3><p>profile： </p>
+<p>​                   profile可以理解为一种规范，一个标准的通信协议，它存在于从机中。蓝牙组织规定了一些标准的profile，例如 HID OVER GATT ，防丢器 ，心率计等。每个profile中会包含多个service，每个service代表从机的一种能力。</p>
+<p> service：</p>
+<p>​                  service可以理解为一个服务，在ble从机中，通过有多个服务，例如电量信息服务、系统信息服务等，每个service中又包含多个characteristic特征值。每个具体的characteristic特征值才是ble通信的主题。比如当前的电量是80%，所以会通过电量的characteristic特征值存在从机的profile里，这样主机就可以通过这个characteristic来读取80%这个数据 </p>
+<p>characteristic：</p>
+<p>​                   characteristic特征值，ble主从机的通信均是通过characteristic来实现，可以理解为一个标签，通过这个标签可以获取或者写入想要的内容。 </p>
+<p>UUID：</p>
+<p>​                     UUID，统一识别码，我们刚才提到的service和characteristic，都需要一个唯一的uuid来标识 整理一下，每个从机都会有一个叫做profile的东西存在，不管是上面的自定义的simpleprofile，还是标准的防丢器profile，他们都是由一些列service组成，然后每个service又包含了多个characteristic，主机和从机之间的通信，均是通过characteristic来实现。</p>
+<h2 id="分辨查找micro-bit服务和特性的UUID"><a href="#分辨查找micro-bit服务和特性的UUID" class="headerlink" title="分辨查找micro:bit服务和特性的UUID"></a>分辨查找micro:bit服务和特性的UUID</h2><!--more-->
+
+<p>在准备读写服务和特性时一定要检查microbit板子提供的服务中是否包含我们需要的服务。</p>
+<p>然后，可以通过chrome自带蓝牙插件网址 chrome://bluetooth-internals 对照各服务的UUID。</p>
+<h2 id="如何读写它的特性"><a href="#如何读写它的特性" class="headerlink" title="如何读写它的特性"></a>如何读写它的特性</h2><!--more-->
+
+<p>首先通过上面的网址，把我们所需的UUID保存下来，然后再创建相应的变量，写出对应的代码，在之后分别填入ervice UUID和characteristic UUID号，用来进行与开发板中服务UUID号进行核对,最后，我们只需再写一个函数检验开发板的服务即可。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/06/19/mircro-bit%E7%89%B9%E6%80%A7/" data-id="ckbm073cn0005gktq072cb2kj" class="article-share-link">Share</a>
+      
+      
+    </footer>
   </div>
-</article>
+  
+    
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2020/06/17/%E8%93%9D%E7%89%99%E8%AE%BE%E5%A4%87%E8%BF%9E%E6%8E%A5/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">蓝牙设备连接</div>
+    </a>
   
+</nav>
 
+  
+</article>
 
 </section>
         
