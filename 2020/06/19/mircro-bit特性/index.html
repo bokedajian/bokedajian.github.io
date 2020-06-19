@@ -14,13 +14,15 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="micro:bit服务和特性">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://yjxsbiubiu.top/CDN/06.19.8.png">
+<meta property="og:image" content="https://yjxsbiubiu.top/CDN/06.19.10.png">
 <meta property="og:image" content="https://yjxsbiubiu.top/CDN/06.19.4.png">
 <meta property="og:image" content="https://yjxsbiubiu.top/CDN/06.19.11.png">
 <meta property="article:published_time" content="2020-06-19T09:08:16.000Z">
-<meta property="article:modified_time" content="2020-06-19T11:28:50.413Z">
+<meta property="article:modified_time" content="2020-06-19T11:44:52.603Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://yjxsbiubiu.top/CDN/06.19.4.png">
+<meta name="twitter:image" content="https://yjxsbiubiu.top/CDN/06.19.8.png">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -108,6 +110,24 @@
 <h2 id="如何读写它的特性"><a href="#如何读写它的特性" class="headerlink" title="如何读写它的特性"></a>如何读写它的特性</h2><!--more-->
 
 <p>首先通过上面的网址，把我们所需的UUID保存下来，然后再创建相应的变量，写出对应的代码，在之后分别填入ervice UUID和characteristic UUID号，用来进行与开发板中服务UUID号进行核对,最后，我们只需再写一个函数检验开发板的服务即可。</p>
+<h2 id="蓝牙LED服务"><a href="#蓝牙LED服务" class="headerlink" title="蓝牙LED服务"></a>蓝牙LED服务</h2><!--more-->
+
+<p>编写<strong>主体</strong>代码：</p>
+<p>在script中添加标志性的变量，用来判断服务和特性是否补发现，每个服务和特性都要定义这个变量，它只有两种状态，true和flase</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var has_accelerometer_service &#x3D; false; </span><br><span class="line">var has_accelerometer_data &#x3D; false; </span><br><span class="line">var has_led_service &#x3D; false;</span><br><span class="line">var has_led_matrix_state &#x3D; false; </span><br><span class="line">var has_led_text&#x3D;false     &#x2F;&#x2F;新加的led_text特性相关语句</span><br><span class="line">var has_device_information_service &#x3D; false; </span><br><span class="line">var has_model_name_string &#x3D; false;</span><br></pre></td></tr></table></figure>
+
+<p>然后定义服务和特性uuid号和一些存放相应特性的变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; service UUIDs </span><br><span class="line"> ACCELEROMETER_SERVICE &#x3D; &#39;e95d0753-251d-470a-a062-fa1922dfa9a8&#39;; </span><br><span class="line"> LED_SERVICE &#x3D; &#39;e95dd91d-251d-470a-a062-fa1922dfa9a8&#39;; </span><br><span class="line"> DEVICE_INFORMATION_SERVICE &#x3D; &#39;0000180a-0000-1000-8000-00805f9b34fb&#39;;</span><br><span class="line">&#x2F;&#x2F; characteristic UUIDs </span><br><span class="line"> ACCELEROMETER_DATA &#x3D; &#39;e95dca4b-251d-470a-a062-fa1922dfa9a8&#39;; </span><br><span class="line"> LED_MATRIX_STATE  &#x3D; &#39;e95d7b77-251d-470a-a062-fa1922dfa9a8&#39;; </span><br><span class="line"> LED_TEXT&#x3D;&#39;e95d93ee-251d-470a-a062-fa1922dfa9a8&#39;  &#x2F;&#x2F;新加的led_text特性相关语句</span><br><span class="line"> MODEL_NUMBER_STRING &#x3D; &#39;00002a24-0000-1000-8000-00805f9b34fb&#39;;</span><br><span class="line"> &#x2F;&#x2F; cached characteristics var accelerometer_data; </span><br><span class="line"> var led_matrix_state; </span><br><span class="line"> var led_text;          &#x2F;&#x2F;新加的led_text特性相关语句</span><br><span class="line"> var model_number_string;</span><br><span class="line"> var accelerometer_data;</span><br></pre></td></tr></table></figure>
+
+<p>在boby中第一个表格中再加一列用来判断服务是否成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;table border&#x3D;&quot;1&quot;&gt;</span><br><span class="line">               &lt;tr&gt;</span><br><span class="line">                   &lt;td&gt;     &lt;b&gt;Connected&lt;&#x2F;b&gt;   &lt;&#x2F;td&gt;</span><br><span class="line">                   &lt;td&gt;     &lt;b&gt;Service Discovery Completed&lt;&#x2F;b&gt;   &lt;&#x2F;td&gt;</span><br><span class="line">               &lt;&#x2F;tr&gt;</span><br><span class="line">               &lt;tr&gt;</span><br><span class="line">                   &lt;td id&#x3D;&quot;status_connected&quot;&gt; false &lt;&#x2F;td&gt;</span><br><span class="line">                   &lt;td id&#x3D;&quot;status_discovered&quot;&gt; false &lt;&#x2F;td&gt;</span><br><span class="line">               &lt;&#x2F;tr&gt;</span><br><span class="line">           &lt;&#x2F;table&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="测试是否成功"><a href="#测试是否成功" class="headerlink" title="测试是否成功"></a>测试是否成功</h2><!--more-->
+
+<p>打开网页，按快捷键F12查看LED服务与特性：</p>
+<p><img src="https://yjxsbiubiu.top/CDN/06.19.8.png" alt=""></p>
+<p>当表格中的Service Discovery Completed为true就表示服务都成功了</p>
+<p><img src="https://yjxsbiubiu.top/CDN/06.19.10.png" alt=""></p>
 <h2 id="关于蓝牙温度服务的实现"><a href="#关于蓝牙温度服务的实现" class="headerlink" title="关于蓝牙温度服务的实现"></a>关于蓝牙温度服务的实现</h2><!--more-->
 
 <h3 id="一、在microbit开发板上添加服务"><a href="#一、在microbit开发板上添加服务" class="headerlink" title="一、在microbit开发板上添加服务"></a>一、在microbit开发板上添加服务</h3><p>1.在蓝牙连接的状态下，打开<a href="https://makecode.microbit.org/v0/89975-20684-84568-20127" target="_blank" rel="noopener">https://makecode.microbit.org/v0/89975-20684-84568-20127</a> 进行在线源码编辑。</p>
@@ -122,7 +142,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/06/19/mircro-bit%E7%89%B9%E6%80%A7/" data-id="ckbm4s0ht0005yktqe19lchd0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/06/19/mircro-bit%E7%89%B9%E6%80%A7/" data-id="ckbm5cyct000548tqf5n66i8n" class="article-share-link">Share</a>
       
       
     </footer>
