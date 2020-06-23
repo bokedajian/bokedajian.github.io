@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>microbit进行读写特性 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="蓝牙读写特性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="microbit进行读写特性">
+<meta property="og:url" content="http://yoursite.com/2020/06/23/microbit%E8%BF%9B%E8%A1%8C%E8%AF%BB%E5%86%99%E7%89%B9%E6%80%A7/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="蓝牙读写特性">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/CCIT18101030214TPJ/resource//QQ%E6%88%AA%E5%9B%BE20200621185037.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/CCIT18101030214TPJ/resource//IMG_20200621_185504.jpg">
+<meta property="article:published_time" content="2020-06-23T09:27:32.000Z">
+<meta property="article:modified_time" content="2020-06-23T09:41:32.659Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/CCIT18101030214TPJ/resource//QQ%E6%88%AA%E5%9B%BE20200621185037.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-microbit进行读写特性" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/06/23/microbit%E8%BF%9B%E8%A1%8C%E8%AF%BB%E5%86%99%E7%89%B9%E6%80%A7/" class="article-date">
+  <time datetime="2020-06-23T09:27:32.000Z" itemprop="datePublished">2020-06-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      microbit进行读写特性
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="蓝牙读写特性"><a href="#蓝牙读写特性" class="headerlink" title="蓝牙读写特性"></a>蓝牙读写特性</h2><a id="more"></a>
+
+<p>最终完成效果应如下图：<img src="https://cdn.jsdelivr.net/gh/CCIT18101030214TPJ/resource//QQ%E6%88%AA%E5%9B%BE20200621185037.png" alt=""></p>
+<h2 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h2><!--more-->
+
+<h3 id="一、阅读特性代码的实现"><a href="#一、阅读特性代码的实现" class="headerlink" title="一、阅读特性代码的实现"></a>一、阅读特性代码的实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">function readModelNumber() &#123; </span><br><span class="line">        console.log(&quot;readModelNumber&quot;); </span><br><span class="line">        &#x2F;&#x2F; state validation </span><br><span class="line">        if (!connected) &#123; </span><br><span class="line">            alert(&quot;Error: Discover and connect to a device before using this function&quot;);</span><br><span class="line">            return; </span><br><span class="line">        &#125;</span><br><span class="line">        if (!services_discovered) &#123; </span><br><span class="line">            alert(&quot;Error: Service discovery has not yet completed&quot;);</span><br><span class="line">            return; </span><br><span class="line">        &#125;</span><br><span class="line">        if (!has_device_information_service) &#123; </span><br><span class="line">            alert(&quot;Error: The connected device does not contain the device information service&quot;);    </span><br><span class="line">            return;  </span><br><span class="line">        &#125;   </span><br><span class="line">        if (!has_model_name_string) &#123;    </span><br><span class="line">            alert(&quot;Error: The connected device does not contain the model name string characteristic&quot;);  </span><br><span class="line">            return;  </span><br><span class="line">        &#125;   </span><br><span class="line"> </span><br><span class="line">        model_number_string.readValue()  </span><br><span class="line">            .then(value &#x3D;&gt; &#123;    </span><br><span class="line">               data &#x3D; new Uint8Array(value.buffer);  </span><br><span class="line">               model_number_string &#x3D; new TextDecoder(&quot;utf8&quot;).decode(data);  </span><br><span class="line">               console.log(model_number_string); </span><br><span class="line">               document.getElementById(&quot;model_number&quot;).innerHTML &#x3D; model_number_string; </span><br><span class="line">        &#125;)   </span><br><span class="line">            .catch(error &#x3D;&gt; &#123;    </span><br><span class="line">            console.log(&#39;Error: &#39; + error);   </span><br><span class="line">            alert(&#39;Error: &#39; + error);   </span><br><span class="line">            return;   </span><br><span class="line">        &#125;);  </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="二、写特性代码的实现"><a href="#二、写特性代码的实现" class="headerlink" title="二、写特性代码的实现"></a>二、写特性代码的实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">function randomLEDs()</span><br><span class="line">       &#123;</span><br><span class="line">           console.log(&quot;randomLEDs&quot;);</span><br><span class="line">           &#x2F;&#x2F;state validation</span><br><span class="line">           if (!connected)</span><br><span class="line">               &#123;</span><br><span class="line">                   alert(&quot;Error: Discover and connect to a device before using this function&quot;);</span><br><span class="line">                   return</span><br><span class="line">               &#125;</span><br><span class="line">           if (!services_discovered)&#x2F;&#x2F;有没有发现所有服务</span><br><span class="line">               &#123;</span><br><span class="line">                   alert(&quot;Error: Service discovery has not yet completed&quot;);</span><br><span class="line">                   return</span><br><span class="line">               &#125;</span><br><span class="line">           if (!has_led_service)</span><br><span class="line">               &#123;</span><br><span class="line">                   alert(&quot;Error: The connected device does not contain the LED service&quot;);</span><br><span class="line">                   return</span><br><span class="line">               &#125;</span><br><span class="line">           if (!has_led_matrix_state)&#x2F;&#x2F;led灯的特性有没有被发现的一个标记变量</span><br><span class="line">               &#123;</span><br><span class="line">                   alert(&quot;Error: The connected device does not contain the LED matrix state characteristic&quot;);</span><br><span class="line">                   return;</span><br><span class="line">               &#125;</span><br><span class="line">           var led_array &#x3D; [0, 0, 0, 0, 0];</span><br><span class="line"> </span><br><span class="line">           &#x2F;&#x2F;math.random():0~1  math.floor(x):返回小于等于x的最大整数</span><br><span class="line">           led_array[0] &#x3D; Math.floor(Math.random() * 32);</span><br><span class="line">           led_array[1] &#x3D; 1;</span><br><span class="line">           led_array[2] &#x3D; 2;</span><br><span class="line">           led_array[3] &#x3D; 3;</span><br><span class="line">           led_array[4] &#x3D; 4;</span><br><span class="line"> </span><br><span class="line">           var led_matrix_data &#x3D; new Uint8Array(led_array);</span><br><span class="line"> </span><br><span class="line">           led_matrix_state.writeValue(led_matrix_data.buffer)&#x2F;&#x2F;控制板子上灯亮灭</span><br><span class="line">           .then(_ &#x3D;&gt; &#123;</span><br><span class="line">               console.log(&#39;LED matrix state changed&#39;);</span><br><span class="line">           &#125;)</span><br><span class="line">               .catch(error &#x3D;&gt; &#123;</span><br><span class="line">               console.log(&#39;Error: &#39; + error);</span><br><span class="line">               alert(&#39;Error: &#39; +error);  return;</span><br><span class="line">           &#125;);</span><br><span class="line"> </span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="三、HTML相关部分的修改"><a href="#三、HTML相关部分的修改" class="headerlink" title="三、HTML相关部分的修改"></a>三、HTML相关部分的修改</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h2&gt; Status &lt;!-- 显示蓝牙状态 --&gt; </span><br><span class="line">&lt;&#x2F;h2&gt;</span><br><span class="line">&lt;table border&#x3D;&quot;1&quot;&gt;</span><br><span class="line">  &lt;tr&gt; &lt;!--表格的第一行 --&gt;</span><br><span class="line">    &lt;td&gt;&lt;b&gt;Connected&lt;&#x2F;b&gt;&lt;&#x2F;td&gt;</span><br><span class="line">    &lt;td&gt;&lt;b&gt;Service Discovery Completed&lt;&#x2F;b&gt;&lt;&#x2F;td&gt;</span><br><span class="line">  &lt;&#x2F;tr&gt;</span><br><span class="line">  &lt;tr&gt; &lt;!--表格的第二行 --&gt;</span><br><span class="line">    &lt;td id&#x3D;&quot;status_connected&quot;&gt; false &lt;&#x2F;td&gt;</span><br><span class="line">    &lt;td id&#x3D;&quot;status_discovered&quot;&gt; false &lt;&#x2F;td&gt;</span><br><span class="line">  &lt;&#x2F;tr&gt;</span><br><span class="line">&lt;&#x2F;table&gt;</span><br><span class="line">&lt;h2&gt; Device Discovery  Or Disconnect &lt;!-- 扫描&#x2F;发现蓝牙设备 --&gt; </span><br><span class="line">&lt;&#x2F;h2&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_scan&quot; onclick&#x3D;&quot;discoverOrdisconnectDevices()&quot;&gt;Start scan&lt;&#x2F;button&gt; </span><br><span class="line"> </span><br><span class="line">&lt;hr&gt;</span><br><span class="line">&lt;h2&gt;Reading and Writing&lt;&#x2F;h2&gt;</span><br><span class="line">&lt;h3&gt;Write Characteristic - Randomise Lights&lt;&#x2F;h3&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_write&quot; onclick&#x3D;&quot;randomLEDs()&quot;&gt;Randomise LEDs&lt;&#x2F;button&gt;</span><br><span class="line">&lt;h3&gt;Read Characteristic - Model Number&lt;&#x2F;h3&gt; </span><br><span class="line">&lt;button id&#x3D;&quot;btn_read&quot; onclick&#x3D;&quot;readModelNumber()&quot;&gt;Read Model Number&lt;&#x2F;button&gt; </span><br><span class="line">&lt;div id&#x3D;&quot;model_number&quot;&gt;&lt;&#x2F;div&gt; </span><br><span class="line">&lt;hr&gt;</span><br><span class="line">&lt;&#x2F;body&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="LED灯控制亮灭效果"><a href="#LED灯控制亮灭效果" class="headerlink" title="LED灯控制亮灭效果"></a>LED灯控制亮灭效果</h3><p>通过点击Randomise LEDs改变LED灯的亮灭,如图则表示成功：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/CCIT18101030214TPJ/resource//IMG_20200621_185504.jpg" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/06/23/microbit%E8%BF%9B%E8%A1%8C%E8%AF%BB%E5%86%99%E7%89%B9%E6%80%A7/" data-id="ckbrr5xg70006f4tqg01ngb3r" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/06/23/microbit%E8%93%9D%E7%89%99%E5%90%AF%E7%94%A8%E9%80%9A%E7%9F%A5/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          microbit蓝牙启用通知
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/06/19/mircro-bit%E7%89%B9%E6%80%A7/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">mircro:bit服务和特性</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo%E8%BF%9B%E9%98%B6/">hexo进阶</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/next/" rel="tag">next</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/next/" style="font-size: 10px;">next</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/06/23/microbit%E8%93%9D%E7%89%99%E5%90%AF%E7%94%A8%E9%80%9A%E7%9F%A5/">microbit蓝牙启用通知</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/23/microbit%E8%BF%9B%E8%A1%8C%E8%AF%BB%E5%86%99%E7%89%B9%E6%80%A7/">microbit进行读写特性</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/19/mircro-bit%E7%89%B9%E6%80%A7/">mircro:bit服务和特性</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/17/%E8%93%9D%E7%89%99%E8%AE%BE%E5%A4%87%E8%BF%9E%E6%8E%A5/">蓝牙设备连接</a>
+          </li>
+        
+          <li>
+            <a href="/2020/05/30/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
