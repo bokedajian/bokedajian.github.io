@@ -86,29 +86,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="蓝牙启用通知"><a href="#蓝牙启用通知" class="headerlink" title="蓝牙启用通知"></a>蓝牙启用通知</h1><p>最终完成效果图：</p>
-<p><img src="https://cdn.jsdelivr.net/gh/CCIT18101030214TPJ/resource//QQ%E6%88%AA%E5%9B%BE20200621232835.png" alt=""></p>
-<h2 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h2><h3 id="一、添加变量"><a href="#一、添加变量" class="headerlink" title="一、添加变量"></a>一、添加变量</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var    notifications_enabled &#x3D; false;</span><br></pre></td></tr></table></figure>
-
-<p>（效果：跟踪通知订阅的状态）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function setNotificationsStatus(status) &#123; </span><br><span class="line">       notifications_enabled &#x3D; status; </span><br><span class="line">       document.getElementById(&#39;status_notifications&#39;).innerHTML &#x3D; status; </span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
-<p>（效果：将通知订阅的状态传进来，将状态传给notifications_enabled）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setNotificationsStatus(false);</span><br></pre></td></tr></table></figure>
-
-<p>在resetUI部分里添加该部分代码</p>
-<p>（效果：将setNotificationsStatus函数放入resetUI中进行调用）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">function toggleAccelerometerNotifications() &#123; </span><br><span class="line">      console.log(&quot;toggleAccelerometerNotifications&quot;); </span><br><span class="line">      if (!connected) &#123; </span><br><span class="line">          alert(&quot;Error: Discover and connect to a device before using this function&quot;);  </span><br><span class="line">          return;  </span><br><span class="line">      &#125; </span><br><span class="line">      if (!services_discovered) &#123; </span><br><span class="line">          alert(&quot;Error: Service discovery has not yet completed&quot;); </span><br><span class="line">          return; </span><br><span class="line">      &#125;  </span><br><span class="line">      if (!has_accelerometer_service) &#123;  </span><br><span class="line">          alert(&quot;Error: The connected device does not contain the accelerometer service&quot;);  </span><br><span class="line">          return;</span><br><span class="line">      &#125; </span><br><span class="line">      if (!has_accelerometer_data) &#123;  </span><br><span class="line">          alert(&quot;Error: The connected device does not contain the accelerometer data characteristic&quot;);</span><br><span class="line">          return; </span><br><span class="line">      &#125; </span><br><span class="line"></span><br><span class="line">      if (!notifications_enabled) &#123;  </span><br><span class="line">      accelerometer_data.startNotifications()</span><br><span class="line">          .then(_ &#x3D;&gt; &#123; </span><br><span class="line">          console.log(&#39;accelerometer notifications started&#39;);  </span><br><span class="line">          setNotificationsStatus(true); </span><br><span class="line">          accelerometer_data.addEventListener(&#39;characteristicvaluechanged&#39;, onAccelerometerData); </span><br><span class="line">      &#125;)  </span><br><span class="line">          .catch(error &#x3D;&gt; &#123; </span><br><span class="line">          console.log(&#39;Error: &#39; + error);   </span><br><span class="line">          alert(&#39;Error: &#39; + error);  </span><br><span class="line">          return;  </span><br><span class="line">      &#125;); </span><br><span class="line">  &#125; </span><br><span class="line">      else</span><br><span class="line">      &#123; </span><br><span class="line">          accelerometer_data.stopNotifications()  </span><br><span class="line">              .then(_ &#x3D;&gt; &#123;  </span><br><span class="line">              console.log(&#39;accelerometer notifications stopped&#39;);  </span><br><span class="line">              setNotificationsStatus(false); </span><br><span class="line">              accelerometer_data.removeEventListener(&#39;characteristicvaluechanged&#39;, onAccelerometerData); </span><br><span class="line">          &#125;)   </span><br><span class="line">              .catch(error &#x3D;&gt; &#123;  </span><br><span class="line">              console.log(&#39;Could not stop accelerometer_data notifications: &#39; + error);  </span><br><span class="line">          &#125;); </span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<p>（效果：添加toggleAccelerometerNotifications()函数已进行验证连接设备是否包含相关服务与特征，并以此决定是否启用或者禁用通知）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function onAccelerometerData(event) </span><br><span class="line">   &#123; </span><br><span class="line">    console.log(&quot;onAccelerometerData&quot;);</span><br><span class="line">    buffer &#x3D; event.target.value.buffer; </span><br><span class="line">    dataview &#x3D; new DataView(buffer); </span><br><span class="line">    X &#x3D; dataview.getUint16(0, true); </span><br><span class="line">    Y &#x3D; dataview.getUint16(2, true); </span><br><span class="line">    Z &#x3D; dataview.getUint16(4, true);  </span><br><span class="line">    console.log(&quot;X&#x3D;&quot; + X + &quot;, Y&#x3D;&quot; + Y + &quot;, Z+&quot; + Z);  document.getElementById(&quot;accelerometer_data&quot;).innerHTML &#x3D; &quot;X&#x3D;&quot; + X + &quot;, Y&#x3D;&quot; + Y + &quot;, Z&#x3D;&quot; + Z; </span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-
-<p>（效果：添加onAccelerometerData函数，以便于在每次收到通知时被调用，将事件对象目标值附加至ArrayBuffer中）</p>
-
+        <h1 id="蓝牙启用通知"><a href="#蓝牙启用通知" class="headerlink" title="蓝牙启用通知"></a>蓝牙启用通知</h1>
+        
+          <p class="article-more-link">
+            <a href="/2020/06/23/microbit%E8%93%9D%E7%89%99%E5%90%AF%E7%94%A8%E9%80%9A%E7%9F%A5/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/06/23/microbit%E8%93%9D%E7%89%99%E5%90%AF%E7%94%A8%E9%80%9A%E7%9F%A5/" data-id="ckbrr5xg50005f4tq9ryb6cjb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/06/23/microbit%E8%93%9D%E7%89%99%E5%90%AF%E7%94%A8%E9%80%9A%E7%9F%A5/" data-id="ckbrr99vr0005b8tqh9w9gijq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -149,7 +136,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/06/23/microbit%E8%BF%9B%E8%A1%8C%E8%AF%BB%E5%86%99%E7%89%B9%E6%80%A7/" data-id="ckbrr5xg70006f4tqg01ngb3r" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/06/23/microbit%E8%BF%9B%E8%A1%8C%E8%AF%BB%E5%86%99%E7%89%B9%E6%80%A7/" data-id="ckbrr99vs0006b8tqedpkhe5t" class="article-share-link">Share</a>
       
       
     </footer>
@@ -190,7 +177,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/06/19/mircro-bit%E7%89%B9%E6%80%A7/" data-id="ckbrr5xg80007f4tqbgdlau09" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/06/19/mircro-bit%E7%89%B9%E6%80%A7/" data-id="ckbrr99vu000ab8tqc3vo17hm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -231,7 +218,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/06/17/%E8%93%9D%E7%89%99%E8%AE%BE%E5%A4%87%E8%BF%9E%E6%8E%A5/" data-id="ckbrr5xga000bf4tqatjueow4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/06/17/%E8%93%9D%E7%89%99%E8%AE%BE%E5%A4%87%E8%BF%9E%E6%8E%A5/" data-id="ckbrr99vw000bb8tqarlj450m" class="article-share-link">Share</a>
       
       
     </footer>
@@ -280,7 +267,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/05/30/hello-world/" data-id="ckbrr5xfi0000f4tq9vf28w0c" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/05/30/hello-world/" data-id="ckbrr99vi0001b8tqc8kx7h6h" class="article-share-link">Share</a>
       
       
     </footer>
@@ -325,7 +312,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/05/21/hexo/" data-id="ckbrr5xg20002f4tqakq6dgjz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/05/21/hexo/" data-id="ckbrr99vp0004b8tq7uy150gg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/next/" rel="tag">next</a></li></ul>
@@ -372,7 +359,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/04/03/123/" data-id="ckbrr5xfx0001f4tq1n1ebfk8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/04/03/123/" data-id="ckbrr99vb0000b8tqftap2aen" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li></ul>
