@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>控制microbit板子上每个LED灯 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="控制microbit板子上每个LED灯">
+<meta property="og:type" content="article">
+<meta property="og:title" content="控制microbit板子上每个LED灯">
+<meta property="og:url" content="http://yoursite.com/2020/06/25/%E6%8E%A7%E5%88%B6microbit%E6%9D%BF%E5%AD%90%E4%B8%8A%E6%AF%8F%E4%B8%AALED%E7%81%AF/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="控制microbit板子上每个LED灯">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-06-25T09:51:54.000Z">
+<meta property="article:modified_time" content="2020-06-25T10:19:42.757Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-控制microbit板子上每个LED灯" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/06/25/%E6%8E%A7%E5%88%B6microbit%E6%9D%BF%E5%AD%90%E4%B8%8A%E6%AF%8F%E4%B8%AALED%E7%81%AF/" class="article-date">
+  <time datetime="2020-06-25T09:51:54.000Z" itemprop="datePublished">2020-06-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      控制microbit板子上每个LED灯
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="控制microbit板子上每个LED灯"><a href="#控制microbit板子上每个LED灯" class="headerlink" title="控制microbit板子上每个LED灯"></a>控制microbit板子上每个LED灯</h1><a id="more"></a>
+
+<h2 id="实现步骤"><a href="#实现步骤" class="headerlink" title="实现步骤"></a>实现步骤</h2><p>因为有上一部分的铺垫，因此这一次的代码只需在上次的基础上进行优化添加即可</p>
+<h3 id="代码主体"><a href="#代码主体" class="headerlink" title="代码主体"></a>代码主体</h3><h4 id="添加函数"><a href="#添加函数" class="headerlink" title="添加函数"></a>添加函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">var led_Eve&#x3D;[0,0,0,0,0]        </span><br><span class="line">    function Eve()&#123;</span><br><span class="line">        if(led_Eve[i]&#x3D;&#x3D;0)</span><br><span class="line">            &#123;</span><br><span class="line">                led_array[i]&#x3D;led_array[i]|(1&lt;&lt;j);</span><br><span class="line">                led_Eve[i]&#x3D;1;</span><br><span class="line">            &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            led_array[i]&#x3D;led_array[i]&amp;(~(1&lt;&lt;j));</span><br><span class="line">            led_Eve[i]&#x3D;0;</span><br><span class="line">        &#125;</span><br><span class="line">            randomLEDs();</span><br><span class="line">    &#125;</span><br><span class="line">    function E(A)&#123;</span><br><span class="line">         if(A&#x3D;&#x3D;0)&#123;i&#x3D;0;j&#x3D;0;Eve();&#125;</span><br><span class="line">        else if(A&#x3D;&#x3D;1)&#123;i&#x3D;1;j&#x3D;0;Eve();&#125;</span><br><span class="line">        else if(A&#x3D;&#x3D;2)&#123;i&#x3D;2;j&#x3D;0;Eve();&#125;</span><br><span class="line">        else if(A&#x3D;&#x3D;3)&#123;i&#x3D;3;j&#x3D;0;Eve();&#125;</span><br><span class="line">        else if(A&#x3D;&#x3D;4)&#123;i&#x3D;4;j&#x3D;0;Eve();&#125;</span><br><span class="line">&#123;1&#125;</span><br><span class="line">        if(A&#x3D;&#x3D;5)&#123;i&#x3D;0;j&#x3D;1;Eve();&#125;</span><br><span class="line">        else if(A&#x3D;&#x3D;6)&#123;i&#x3D;1;j&#x3D;1;Eve();&#125;</span><br><span class="line">        else if(A&#x3D;&#x3D;7)&#123;i&#x3D;2;j&#x3D;1;Eve();&#125;</span><br><span class="line">        else if(A&#x3D;&#x3D;8)&#123;i&#x3D;3;j&#x3D;1;Eve();&#125;</span><br><span class="line">        else if(A&#x3D;&#x3D;9)&#123;i&#x3D;4;j&#x3D;1;Eve();&#125;</span><br><span class="line">&#123;1&#125;</span><br><span class="line">        if(A&#x3D;&#x3D;10)&#123;i&#x3D;0;j&#x3D;2;Eve();&#125;</span><br><span class="line">        else if(A&#x3D;&#x3D;11)&#123;i&#x3D;1;j&#x3D;2;Eve();&#125;</span><br><span class="line">        else if(A&#x3D;&#x3D;12)&#123;i&#x3D;2;j&#x3D;2;Eve();&#125;</span><br><span class="line">        else if(A&#x3D;&#x3D;13)&#123;i&#x3D;3;j&#x3D;2;Eve();&#125;</span><br><span class="line">        else if(A&#x3D;&#x3D;14)&#123;i&#x3D;4;j&#x3D;2;Eve();&#125;</span><br><span class="line">&#123;1&#125;</span><br><span class="line">        if(A&#x3D;&#x3D;15)&#123;i&#x3D;0;j&#x3D;3;Eve();&#125;</span><br><span class="line">        else if(A&#x3D;&#x3D;16)&#123;i&#x3D;1;j&#x3D;3;Eve();&#125;</span><br><span class="line">        else if(A&#x3D;&#x3D;17)&#123;i&#x3D;2;j&#x3D;3;Eve();&#125;</span><br><span class="line">        else if(A&#x3D;&#x3D;18)&#123;i&#x3D;3;j&#x3D;3;Eve();&#125;</span><br><span class="line">        else if(A&#x3D;&#x3D;19)&#123;i&#x3D;4;j&#x3D;3;Eve();&#125;</span><br><span class="line">&#123;1&#125;</span><br><span class="line">        if(A&#x3D;&#x3D;20)&#123;i&#x3D;0;j&#x3D;4;Eve();&#125;</span><br><span class="line">        else if(A&#x3D;&#x3D;21)&#123;i&#x3D;1;j&#x3D;4;Eve();&#125;</span><br><span class="line">        else if(A&#x3D;&#x3D;22)&#123;i&#x3D;2;j&#x3D;4;Eve();&#125;</span><br><span class="line">        else if(A&#x3D;&#x3D;23)&#123;i&#x3D;3;j&#x3D;4;Eve();&#125;</span><br><span class="line">        else if(A&#x3D;&#x3D;24)&#123;i&#x3D;4;j&#x3D;4;Eve();&#125;</span><br><span class="line">&#123;1&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#123;1&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改html部分并添加按钮"><a href="#修改html部分并添加按钮" class="headerlink" title="修改html部分并添加按钮"></a>修改html部分并添加按钮</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&lt;h5&gt;Control Every-LED&lt;&#x2F;h5&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE0&quot; onclick&#x3D;&quot;E(0)&quot;&gt;Control LED1&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE1&quot; onclick&#x3D;&quot;E(1)&quot;&gt;Control LED2&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE2&quot; onclick&#x3D;&quot;E(2)&quot;&gt;Control LED3&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE3&quot; onclick&#x3D;&quot;E(3)&quot;&gt;Control LED4&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE4&quot; onclick&#x3D;&quot;E(4)&quot;&gt;Control LED5&lt;&#x2F;button&gt;</span><br><span class="line">&lt;br&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE5&quot; onclick&#x3D;&quot;E(5)&quot;&gt;Control LED6&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE6&quot; onclick&#x3D;&quot;E(6)&quot;&gt;Control LED7&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE7&quot; onclick&#x3D;&quot;E(7)&quot;&gt;Control LED8&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE8&quot; onclick&#x3D;&quot;E(8)&quot;&gt;Control LED9&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE9&quot; onclick&#x3D;&quot;E(9)&quot;&gt;Control LED10&lt;&#x2F;button&gt;</span><br><span class="line">&lt;br&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE10&quot; onclick&#x3D;&quot;E(10)&quot;&gt;Control LED11&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE11&quot; onclick&#x3D;&quot;E(11)&quot;&gt;Control LED12&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE12&quot; onclick&#x3D;&quot;E(12)&quot;&gt;Control LED13&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE13&quot; onclick&#x3D;&quot;E(13)&quot;&gt;Control LED14&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE14&quot; onclick&#x3D;&quot;E(14)&quot;&gt;Control LED15&lt;&#x2F;button&gt;</span><br><span class="line">&lt;br&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE15&quot; onclick&#x3D;&quot;E(15)&quot;&gt;Control LED16&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE16&quot; onclick&#x3D;&quot;E(16)&quot;&gt;Control LED17&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE17&quot; onclick&#x3D;&quot;E(17)&quot;&gt;Control LED18&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE18&quot; onclick&#x3D;&quot;E(18)&quot;&gt;Control LED19&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE19&quot; onclick&#x3D;&quot;E(19)&quot;&gt;Control LED20&lt;&#x2F;button&gt;</span><br><span class="line">&lt;br&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE20&quot; onclick&#x3D;&quot;E(20)&quot;&gt;Control LED21&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE21&quot; onclick&#x3D;&quot;E(21)&quot;&gt;Control LED22&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE22&quot; onclick&#x3D;&quot;E(22)&quot;&gt;Control LED23&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE23&quot; onclick&#x3D;&quot;E(23)&quot;&gt;Control LED24&lt;&#x2F;button&gt;</span><br><span class="line">&lt;button id&#x3D;&quot;btn_writeE24&quot; onclick&#x3D;&quot;E(24)&quot;&gt;Control LED25&lt;&#x2F;button&gt;</span><br></pre></td></tr></table></figure>
+
+<p>最后在网页中按F12进行排错</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/06/25/%E6%8E%A7%E5%88%B6microbit%E6%9D%BF%E5%AD%90%E4%B8%8A%E6%AF%8F%E4%B8%AALED%E7%81%AF/" data-id="ckbun0tce000dgktq99zjgvun" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/06/25/%E6%8E%A7%E5%88%B6BBC-Microbit-LED%E7%81%AF%E7%9A%84%E8%A1%8C%E5%88%97/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">控制BBC Microbit LED灯的行列</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo%E8%BF%9B%E9%98%B6/">hexo进阶</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/next/" rel="tag">next</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/next/" style="font-size: 10px;">next</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">April 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/06/25/%E6%8E%A7%E5%88%B6microbit%E6%9D%BF%E5%AD%90%E4%B8%8A%E6%AF%8F%E4%B8%AALED%E7%81%AF/">控制microbit板子上每个LED灯</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/25/%E6%8E%A7%E5%88%B6BBC-Microbit-LED%E7%81%AF%E7%9A%84%E8%A1%8C%E5%88%97/">控制BBC Microbit LED灯的行列</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/23/microbit%E8%93%9D%E7%89%99%E5%90%AF%E7%94%A8%E9%80%9A%E7%9F%A5/">microbit蓝牙启用通知</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/23/microbit%E8%BF%9B%E8%A1%8C%E8%AF%BB%E5%86%99%E7%89%B9%E6%80%A7/">microbit进行读写特性</a>
+          </li>
+        
+          <li>
+            <a href="/2020/06/19/mircro-bit%E7%89%B9%E6%80%A7/">mircro:bit服务和特性</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
